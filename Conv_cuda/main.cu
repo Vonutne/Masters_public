@@ -265,7 +265,7 @@ __host__ void runVersions (int in_dim, int n_in, int n_out) {
 
     //1.1 allocate memory for input, output and kernel channels. Right now assuming floats, but might want
     unsigned long long in_size = n_in * in_dim * in_dim;
-    unsigned long long in_size_mem = in_size * sizeof(T) + (in_dim * in_dim) * sizeof(T);
+    unsigned long long in_size_mem = in_size * sizeof(T) + (in_dim * in_dim) * sizeof(T); // extra padding for branchless
     T* h_in = (T*) malloc(in_size_mem);
 
     int ker_dim = 2*radius+1;
@@ -305,7 +305,7 @@ __host__ void runVersions (int in_dim, int n_in, int n_out) {
     run2DConv<T,Tx,Ty,Ry,Tz,Rz,radius> (d_in,d_ker,d_out,h_out,n_in,in_dim,n_out);
     #endif
     #if 1
-    //runNaive<T,Tx,Ty,Tz,radius> (d_in, d_ker,d_out,h_out,n_in,in_dim,n_out);
+    runNaive<T,Tx,Ty,Tz,radius> (d_in, d_ker,d_out,h_out,n_in,in_dim,n_out);
     run2DConv<T,Tx,Ty,Ry,Tz,Rz,radius> (d_in,d_ker,d_out,h_out,n_in,in_dim,n_out);
     run2DConvBL<T,Tx,Ty,Ry,Tz,Rz,radius> (d_in,d_ker,d_out,h_out,n_in,in_dim,n_out);
     #endif
@@ -335,8 +335,7 @@ int main (int argc, char * argv[]) {
     const int IN_DIM = atoi(argv[1]);
     const int N_OUT = atoi(argv[2]);
     const int N_IN = atoi(argv[3]);
-    // const int HEIGHT = atoi(argv[4]);;
-    //template<class T, int Tx, int Ty, int Ry, int Tz, int Rz, int radius>
+
     cudaSetDevice(0);
 
     #if 0
@@ -366,7 +365,7 @@ int main (int argc, char * argv[]) {
     //template<class T, int Tx, int Ty, int Ry, int Tz, int Rz, int radius>
     //versions for evaluation:
     #endif
-    #if 0
+    #if 1
     runVersions<float, 32, 2,13,2,4,1>(IN_DIM,N_IN,N_OUT);
     runVersions<float, 32, 2,10,2,4,2>(IN_DIM,N_IN,N_OUT);
     runVersions<float, 32, 2,16,2,2,3>(IN_DIM,N_IN,N_OUT);
@@ -378,7 +377,7 @@ int main (int argc, char * argv[]) {
     runVersions<float,256,1,8,1,8,1>(IN_DIM,N_IN,N_OUT);
     #endif
     // versions for 1x1 eval
-    #if 1
+    #if 0
     runVersions<float, 32, 4,13,1,1,1>(IN_DIM,N_IN,N_OUT);
     runVersions<float, 32, 4,10,1,1,2>(IN_DIM,N_IN,N_OUT);
     runVersions<float, 32, 4,21,1,1,3>(IN_DIM,N_IN,N_OUT);
