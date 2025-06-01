@@ -1,0 +1,168 @@
+types {
+
+}
+
+
+
+entry("main",
+      {inputs: [][][]f32,
+       filters: [][][][]f32},
+      {*[][][]f32})
+  entry_main (num_in_ch_7610 : i64,
+              in_height_7611 : i64,
+              in_width_7612 : i64,
+              num_out_ch_7613 : i64,
+              filter_width_7614 : i64,
+              inputs_7615 : [num_in_ch_7610][in_height_7611][in_width_7612]f32,
+              filters_7616 : [num_in_ch_7610][num_out_ch_7613][filter_width_7614][filter_width_7614]f32)
+  : {i64,
+     i64,
+     *[num_out_ch_7613][?0][?1]f32} = {
+  let {+_lhs_9310 : i64} =
+    sub64(in_height_7611, filter_width_7614)
+  let {out_height_9311 : i64} =
+    add64(1i64, +_lhs_9310)
+  let {+_lhs_9312 : i64} =
+    sub64(in_width_7612, filter_width_7614)
+  let {out_width_9313 : i64} =
+    add64(1i64, +_lhs_9312)
+  let {bounds_invalid_upwards_9318 : bool} =
+    slt64(out_height_9311, 0i64)
+  let {valid_9319 : bool} =
+    neg_bool bounds_invalid_upwards_9318
+  let {range_valid_c_9320 : unit} =
+    assert(valid_9319, {"Range ", 0i64 : i64, "..", 1i64 : i64, "..<", out_height_9311 : i64, " is invalid."}, "/prelude/array.fut:94:3-11")
+  let {bounds_invalid_upwards_9322 : bool} =
+    slt64(out_width_9313, 0i64)
+  let {valid_9323 : bool} =
+    neg_bool bounds_invalid_upwards_9322
+  let {range_valid_c_9324 : unit} =
+    assert(valid_9323, {"Range ", 0i64 : i64, "..", 1i64 : i64, "..<", out_width_9313 : i64, " is invalid."}, "/prelude/array.fut:94:3-11")
+  let {is_filters_zero_width_9327 : bool} =
+    eq_i64(filter_width_7614, 0i64)
+  let {filter_width_minus_1_9328 : i64} =
+    sub64(filter_width_7614, 1i64)
+  let {width_mul_height_9703 : i64} =
+    mul_nw64(out_height_9311, out_width_9313)
+  let {nest_size_out_width_height_9704 : i64} =
+    mul_nw64(num_out_ch_7613, width_mul_height_9703)
+  let {segmap_tblock_size_9705 : i64} =
+    get_size(segmap_tblock_size_9496, thread_block_size)
+  let {segmap_usable_groups_9706 : i64} =
+    sdiv_up64(nest_size_out_width_height_9704, segmap_tblock_size_9705)
+  let {filters_coalesced_9797 : [num_in_ch_7610][num_out_ch_7613][filter_width_7614][filter_width_7614]f32} =
+    manifest((0, 2, 3, 1), filters_7616)
+  let {DimY_10001 : i64} = 
+    sdiv_up64(out_height_9311, 32i64)
+  let {DimCout_10013 : i64} =
+    sdiv_up64(num_out_ch_7613, 2i64)
+  let {to_rearrange_9707 : [DimCout_10013][DimY_10001][out_width_9313][32i64][2i64]f32} =
+    segmap(thread; ; grid=segmap_usable_groups_9706; blocksize=segmap_tblock_size_9705)
+    (tIdz_9708 < DimCout_10013, tIdy_9709 < DimY_10001, tIdx_9710 < out_width_9313) (~phys_tid_9711) : {[32i64][2i64]f32} {
+      let {index_primexp_9770 : i64} =
+        add64(filter_width_7614, tIdy_9709)
+      let {binop_x_9779 : bool} =
+        sle64(tIdy_9709, index_primexp_9770)
+      let {cmpop_y_9780 : i64} =
+        add64(filter_width_minus_1_9328, tIdy_9709)
+      let {binop_x_9781 : bool} =
+        sle64(0i64, cmpop_y_9780)
+      let {binop_y_9783 : bool} =
+        slt64(cmpop_y_9780, in_height_7611)
+      let {binop_y_9784 : bool} =
+        logand(binop_x_9781, binop_y_9783)
+      let {binop_y_9785 : bool} =
+        logand(binop_x_9779, binop_y_9784)
+      let {index_primexp_9786 : bool} =
+        logor(is_filters_zero_width_9327, binop_y_9785)
+      let {map2__arg0_9718 : i64} =
+        #{range_valid_c_9324}
+        add64(filter_width_7614, tIdx_9710)
+      let {i_p_m_t_s_9719 : i64} =
+        #{range_valid_c_9324}
+        add64(filter_width_minus_1_9328, tIdx_9710)
+      let {zero_leq_i_p_m_t_s_9720 : bool} =
+        sle64(0i64, i_p_m_t_s_9719)
+      let {i_p_m_t_s_leq_w_9721 : bool} =
+        slt64(i_p_m_t_s_9719, in_width_7612)
+      let {i_lte_j_9723 : bool} =
+        #{range_valid_c_9324}
+        sle64(tIdx_9710, map2__arg0_9718)
+      let {y_9725 : bool} =
+        #{range_valid_c_9324}
+        logand(zero_leq_i_p_m_t_s_9720, i_p_m_t_s_leq_w_9721)
+      let {forwards_ok_9726 : bool} =
+        logand(i_lte_j_9723, y_9725)
+      let {ok_or_empty_9727 : bool} =
+        logor(is_filters_zero_width_9327, forwards_ok_9726)
+      let {index_ok_9736 : bool} =
+        #{range_valid_c_9320}
+        logand(ok_or_empty_9727, index_primexp_9786)
+      let {in_ch_loop_init_10005 : [32i64][2i64]f32} = 
+        replicate([32i64][2i64], 0.0f32)
+      let {y_thread_first_10011 : i64} = 
+        mul_nw64(tIdy_9709, 32i64)
+      let {cout_thread_first_10014 : i64} = 
+        mul_nw64(tIdz_9708, 2i64)
+      let {in_ch_loop_result_9728 : [32i64][2i64]f32} =
+        loop {in_ch_loop_tmp_9787 : *[32i64][2i64]f32} = {in_ch_loop_init_10005}
+        for in_channel_9788:i64 < num_in_ch_7610 do {
+          let {index_certs_9737 : unit} =
+            #{range_valid_c_9320, range_valid_c_9324}
+            assert(index_ok_9736, {"Index [", in_channel_9788 : i64, ", ", tIdy_9709 : i64, ":", index_primexp_9770 : i64, ", ", tIdx_9710 : i64, ":", map2__arg0_9718 : i64, "] out of bounds for array of shape [", num_in_ch_7610 : i64, "][", in_height_7611 : i64, "][", in_width_7612 : i64, "]."}, "conv_naive.fut:77:18-53")
+          let {y_per_thread_loop_result_10006 : [32i64][2i64]f32} =
+            loop {y_per_thread_loop_tmp_10007 : *[32i64][2i64]f32} = {in_ch_loop_tmp_9787}
+            for loop_y_10008:i64 < 32i64 do {
+              let {y_thread_current_10012 : i64} = 
+                add_nw64(y_thread_first_10011, loop_y_10008)
+              let {cout_per_thread_loop_result_10015 : [32i64][2i64]f32} =
+                loop {cout_per_thread_loop_tmp_10016 : *[32i64][2i64]f32} = {y_per_thread_loop_tmp_10007}
+                for loop_cout_10017:i64 < 2i64 do {
+                  let {cout_thread_current_10018 : i64} = 
+                    add_nw64(cout_thread_first_10014, loop_cout_10017)
+                  let {outer_filter_loop_result_9740 : f32} =
+                    loop {outer_filter_loop_tmp_9789 : f32} = {0.0f32}
+                    for i_9790:i64 < filter_width_7614 do {
+                      let {y_9793 : i64} =
+                        add_nw64(y_thread_current_10012, i_9790)
+                      let {inner_filter_loop_result_9743 : f32} =
+                        loop {inner_filter_loop_tmp_9791 : f32} = {0.0f32}
+                        for j_9792:i64 < filter_width_7614 do {
+                          let {x_9794 : i64} =
+                            add_nw64(tIdx_9710, j_9792)
+                          let {in_val_9744 : f32} =
+                            inputs_7615[in_channel_9788, y_9793, x_9794]
+                          let {filter_val_9745 : f32} =
+                            filters_coalesced_9797[in_channel_9788, cout_thread_current_10018, i_9790, j_9792]
+                          let {in_mul_filter_9746 : f32} =
+                            fmul32(in_val_9744, filter_val_9745)
+                          let {return_9749 : f32} =
+                            fadd32(in_mul_filter_9746, inner_filter_loop_tmp_9791)
+                          in {return_9749}
+                        }
+                      let {return_9752 : f32} =
+                        fadd32(inner_filter_loop_result_9743, outer_filter_loop_tmp_9789)
+                      in {return_9752}
+                    }
+                  let {cout_per_thread_loop_tmp_at_loop_y_cout_10019 : f32} = 
+                    cout_per_thread_loop_tmp_10016[loop_y_10008, loop_cout_10017]
+                  let {to_write_to_cout_per_thread_loop_tmp_10020 : f32} =
+                    fadd32(outer_filter_loop_result_9740, cout_per_thread_loop_tmp_at_loop_y_cout_10019)
+                  let {return_10021 : [32i64][2i64]f32} = 
+                    cout_per_thread_loop_tmp_10016 with [loop_y_10008, loop_cout_10017] = to_write_to_cout_per_thread_loop_tmp_10020 
+                  in {return_10021}
+                }
+              in {cout_per_thread_loop_result_10015}
+            }
+          in {y_per_thread_loop_result_10006}
+        }
+      return {returns in_ch_loop_result_9728}
+    }
+ -- let {to_flatten_10003 : [DimCout_10013][2i64][DimY_10001][32i64][out_width_9313]f32} =
+  -- rearrange((0, 4, 1, 3, 2), to_rearrange_9707)
+  -- let {final_result_10004 : [num_out_ch_7613][out_height_9311][out_width_9313]f32} =
+  --  reshape([num_out_ch_7613][out_height_9311][out_width_9313], to_flatten_10003)
+  let {final_result_10004 : [num_out_ch_7613][out_height_9311][out_width_9313]f32} =
+    reshape([num_out_ch_7613][out_height_9311][out_width_9313], to_rearrange_9707)
+  in {out_height_9311, out_width_9313, final_result_10004}
+}

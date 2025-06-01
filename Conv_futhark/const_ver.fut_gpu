@@ -1,0 +1,127 @@
+types {
+
+}
+
+
+
+entry("main",
+      {inputs: [][][]f32,
+       kernels: [][][][]f32},
+      {*[][][]f32})
+  entry_main (num_in_ch_7840 : i64,
+              in_height_7841 : i64,
+              in_width_7842 : i64,
+              num_out_ch_7843 : i64,
+              inputs_7844 : [num_in_ch_7840][in_height_7841][in_width_7842]f32,
+              kernels_7845 : [num_in_ch_7840][num_out_ch_7843][5i64][5i64]f32)
+  : {i64,
+     i64,
+     *[num_out_ch_7843][?0][?1]f32} = {
+  let {+_lhs_9594 : i64} =
+    sub64(in_height_7841, 5i64)
+  let {out_height_9595 : i64} =
+    add64(1i64, +_lhs_9594)
+  let {+_lhs_9596 : i64} =
+    sub64(in_width_7842, 5i64)
+  let {out_width_9597 : i64} =
+    add64(1i64, +_lhs_9596)
+  let {bounds_invalid_upwards_9599 : bool} =
+    slt64(out_height_9595, 0i64)
+  let {valid_9600 : bool} =
+    neg_bool bounds_invalid_upwards_9599
+  let {range_valid_c_9601 : unit} =
+    assert(valid_9600, {"Range ", 0i64 : i64, "..", 1i64 : i64, "..<", out_height_9595 : i64, " is invalid."}, "/prelude/array.fut:94:3-11")
+  let {bounds_invalid_upwards_9603 : bool} =
+    slt64(out_width_9597, 0i64)
+  let {valid_9604 : bool} =
+    neg_bool bounds_invalid_upwards_9603
+  let {range_valid_c_9605 : unit} =
+    assert(valid_9604, {"Range ", 0i64 : i64, "..", 1i64 : i64, "..<", out_width_9597 : i64, " is invalid."}, "/prelude/array.fut:94:3-11")
+  let {y_9969 : i64} =
+    mul_nw64(out_height_9595, out_width_9597)
+  let {nest_size_9970 : i64} =
+    mul_nw64(num_out_ch_7843, y_9969)
+  let {segmap_tblock_size_9971 : i64} =
+    get_size(segmap_tblock_size_9751, thread_block_size)
+  let {segmap_usable_groups_9972 : i64} =
+    sdiv_up64(nest_size_9970, segmap_tblock_size_9971)
+  let {kernels_coalesced_10046 : [num_in_ch_7840][num_out_ch_7843][5i64][5i64]f32} =
+    manifest((0, 2, 3, 1), kernels_7845)
+  let {defunc_0_map_res_9973 : [num_out_ch_7843][out_height_9595][out_width_9597]f32} =
+    segmap(thread; ; grid=segmap_usable_groups_9972; blocksize=segmap_tblock_size_9971)
+    (gtid_9974 < num_out_ch_7843, gtid_9975 < out_height_9595, gtid_9976 < out_width_9597) (~phys_tid_9977) : {f32} {
+      let {index_primexp_10029 : i64} =
+        add64(5i64, gtid_9975)
+      let {binop_x_10031 : bool} =
+        sle64(gtid_9975, index_primexp_10029)
+      let {cmpop_y_10032 : i64} =
+        add64(4i64, gtid_9975)
+      let {binop_x_10033 : bool} =
+        sle64(0i64, cmpop_y_10032)
+      let {binop_y_10035 : bool} =
+        slt64(cmpop_y_10032, in_height_7841)
+      let {binop_y_10036 : bool} =
+        logand(binop_x_10033, binop_y_10035)
+      let {index_primexp_10037 : bool} =
+        logand(binop_x_10031, binop_y_10036)
+      let {map2__arg0_9984 : i64} =
+        #{range_valid_c_9605}
+        add64(5i64, gtid_9976)
+      let {i_p_m_t_s_9985 : i64} =
+        #{range_valid_c_9605}
+        add64(4i64, gtid_9976)
+      let {zero_leq_i_p_m_t_s_9986 : bool} =
+        sle64(0i64, i_p_m_t_s_9985)
+      let {i_p_m_t_s_leq_w_9987 : bool} =
+        slt64(i_p_m_t_s_9985, in_width_7842)
+      let {i_lte_j_9989 : bool} =
+        #{range_valid_c_9605}
+        sle64(gtid_9976, map2__arg0_9984)
+      let {y_9991 : bool} =
+        #{range_valid_c_9605}
+        logand(zero_leq_i_p_m_t_s_9986, i_p_m_t_s_leq_w_9987)
+      let {forwards_ok_9992 : bool} =
+        logand(i_lte_j_9989, y_9991)
+      let {index_ok_9993 : bool} =
+        #{range_valid_c_9601}
+        logand(forwards_ok_9992, index_primexp_10037)
+      let {index_certs_9994 : unit} =
+        #{range_valid_c_9601, range_valid_c_9605}
+        assert(index_ok_9993, {"Index [", gtid_9975 : i64, ":", index_primexp_10029 : i64, ", ", gtid_9976 : i64, ":", map2__arg0_9984 : i64, "] out of bounds for array of shape [", in_height_7841 : i64, "][", in_width_7842 : i64, "]."}, "conv_naive.fut:98:18-40")
+      let {defunc_0_reduce_res_9996 : f32} =
+        #{index_certs_9994}
+        loop {redout_10038 : f32} = {0.0f32}
+        for i_10039:i64 < num_in_ch_7840 do {
+          let {defunc_0_reduce_res_10002 : f32} =
+            loop {redout_10040 : f32} = {0.0f32}
+            for i_10041:i64 < 5i64 do {
+              let {slice_10044 : i64} =
+                add_nw64(gtid_9975, i_10041)
+              let {defunc_0_reduce_res_10008 : f32} =
+                loop {redout_10042 : f32} = {0.0f32}
+                for i_10043:i64 < 5i64 do {
+                  let {slice_10045 : i64} =
+                    add_nw64(gtid_9976, i_10043)
+                  let {eta_p_10012 : f32} =
+                    #{range_valid_c_9601, range_valid_c_9605, index_certs_9994}
+                    inputs_7844[i_10039, slice_10044, slice_10045]
+                  let {eta_p_10013 : f32} =
+                    kernels_coalesced_10046[i_10039, gtid_9974, i_10041, i_10043]
+                  let {lifted_lambda_res_10014 : f32} =
+                    fmul32(eta_p_10012, eta_p_10013)
+                  let {defunc_0_op_res_10011 : f32} =
+                    fadd32(lifted_lambda_res_10014, redout_10042)
+                  in {defunc_0_op_res_10011}
+                }
+              let {defunc_0_op_res_10005 : f32} =
+                fadd32(defunc_0_reduce_res_10008, redout_10040)
+              in {defunc_0_op_res_10005}
+            }
+          let {defunc_0_op_res_9999 : f32} =
+            fadd32(defunc_0_reduce_res_10002, redout_10038)
+          in {defunc_0_op_res_9999}
+        }
+      return {returns defunc_0_reduce_res_9996}
+    }
+  in {out_height_9595, out_width_9597, defunc_0_map_res_9973}
+}

@@ -1,0 +1,23 @@
+types {
+
+}
+
+
+
+entry("main",
+      {Arr: [][][]f32},
+      {*[][]f32})
+  entry_main (o_5306 : i64,
+              m_5307 : i64,
+              n_5308 : i64,
+              Arr_5309 : [o_5306][m_5307][n_5308]f32)
+  : {i64,
+     *[o_5306][?0]f32} = {
+  let {d<{(*) m n}>_5360 : i64} =
+    mul64(m_5307, n_5308)
+  let {Arr_transformed_5363 : [o_5306][d<{(*) m n}>_5360]f32} =
+    reshape([o_5306][d<{(*) m n}>_5360], Arr_5309)
+  let {defunc_0_map_res_5364 : [o_5306][d<{(*) m n}>_5360]f32} =
+    copy(Arr_transformed_5363)
+  in {d<{(*) m n}>_5360, defunc_0_map_res_5364}
+}

@@ -1,0 +1,111 @@
+./conv 4096 64 64
+In_dim : 4096, out dim 4094, ker dim 3, Nin 64, Nout 64 
+GPU 2D Conv version runs in 285678 microsecs, Gflops/sec 4325.65
+GPU 2D Conv version runs in 89197 microsecs, Gflops/sec 13854.09
+Sizes are: (Indim 4096, Outdim 4094, radius 1, nIn 64, nOut 64, Tx :32, Ty 2, Ry 13, Tz 2, R< 4) 
+In_dim : 4096, out dim 4092, ker dim 5, Nin 64, Nout 64 
+GPU 2D Conv version runs in 707034 microsecs, Gflops/sec 4850.21
+GPU 2D Conv version runs in 215842 microsecs, Gflops/sec 15887.85
+Sizes are: (Indim 4096, Outdim 4092, radius 2, nIn 64, nOut 64, Tx :32, Ty 2, Ry 10, Tz 2, R< 4) 
+In_dim : 4096, out dim 4090, ker dim 7, Nin 64, Nout 64 
+GPU 2D Conv version runs in 1547112 microsecs, Gflops/sec 4340.21
+GPU 2D Conv version runs in 434337 microsecs, Gflops/sec 15459.87
+Sizes are: (Indim 4096, Outdim 4090, radius 3, nIn 64, nOut 64, Tx :32, Ty 2, Ry 16, Tz 2, R< 2) 
+In_dim : 4096, out dim 4088, ker dim 9, Nin 64, Nout 64 
+GPU 2D Conv version runs in 2923826 microsecs, Gflops/sec 3792.67
+GPU 2D Conv version runs in 717139 microsecs, Gflops/sec 15462.99
+Sizes are: (Indim 4096, Outdim 4088, radius 4, nIn 64, nOut 64, Tx :32, Ty 2, Ry 8, Tz 2, R< 4) 
+In_dim : 4096, out dim 4086, ker dim 11, Nin 64, Nout 64 
+GPU 2D Conv version runs in 4730952 microsecs, Gflops/sec 3498.03
+GPU 2D Conv version runs in 1118780 microsecs, Gflops/sec 14792.02
+Sizes are: (Indim 4096, Outdim 4086, radius 5, nIn 64, nOut 64, Tx :32, Ty 2, Ry 6, Tz 2, R< 4) 
+In_dim : 4096, out dim 4084, ker dim 13, Nin 64, Nout 64 
+GPU 2D Conv version runs in 6866632 microsecs, Gflops/sec 3362.83
+GPU 2D Conv version runs in 1645839 microsecs, Gflops/sec 14030.10
+Sizes are: (Indim 4096, Outdim 4084, radius 6, nIn 64, nOut 64, Tx :32, Ty 2, Ry 5, Tz 2, R< 2) 
+In_dim : 4096, out dim 4082, ker dim 15, Nin 64, Nout 64 
+GPU 2D Conv version runs in 10772128 microsecs, Gflops/sec 2851.13
+GPU 2D Conv version runs in 2285087 microsecs, Gflops/sec 13440.51
+Sizes are: (Indim 4096, Outdim 4082, radius 7, nIn 64, nOut 64, Tx :32, Ty 2, Ry 5, Tz 2, R< 2) 
+In_dim : 4096, out dim 4080, ker dim 17, Nin 64, Nout 64 
+GPU 2D Conv version runs in 23827045 microsecs, Gflops/sec 1654.01
+GPU 2D Conv version runs in 20443070 microsecs, Gflops/sec 1927.80
+Sizes are: (Indim 4096, Outdim 4080, radius 8, nIn 64, nOut 64, Tx :32, Ty 2, Ry 8, Tz 2, R< 2) 
+In_dim : 4096, out dim 4094, ker dim 3, Nin 64, Nout 64 
+GPU 2D Conv version runs in 307849 microsecs, Gflops/sec 4014.12
+GPU 2D Conv version runs in 93651 microsecs, Gflops/sec 13195.19
+Sizes are: (Indim 4096, Outdim 4094, radius 1, nIn 64, nOut 64, Tx :256, Ty 1, Ry 8, Tz 1, R< 8) 
+./conv 4096 32 32
+In_dim : 4096, out dim 4094, ker dim 3, Nin 32, Nout 32 
+GPU 2D Conv version runs in 72973 microsecs, Gflops/sec 4233.56
+GPU 2D Conv version runs in 22750 microsecs, Gflops/sec 13579.59
+Sizes are: (Indim 4096, Outdim 4094, radius 1, nIn 32, nOut 32, Tx :32, Ty 2, Ry 13, Tz 2, R< 4) 
+In_dim : 4096, out dim 4092, ker dim 5, Nin 32, Nout 32 
+GPU 2D Conv version runs in 180281 microsecs, Gflops/sec 4755.45
+GPU 2D Conv version runs in 54841 microsecs, Gflops/sec 15632.77
+Sizes are: (Indim 4096, Outdim 4092, radius 2, nIn 32, nOut 32, Tx :32, Ty 2, Ry 10, Tz 2, R< 4) 
+In_dim : 4096, out dim 4090, ker dim 7, Nin 32, Nout 32 
+GPU 2D Conv version runs in 392703 microsecs, Gflops/sec 4274.73
+GPU 2D Conv version runs in 109685 microsecs, Gflops/sec 15304.72
+Sizes are: (Indim 4096, Outdim 4090, radius 3, nIn 32, nOut 32, Tx :32, Ty 2, Ry 16, Tz 2, R< 2) 
+In_dim : 4096, out dim 4088, ker dim 9, Nin 32, Nout 32 
+GPU 2D Conv version runs in 739641 microsecs, Gflops/sec 3748.14
+GPU 2D Conv version runs in 183142 microsecs, Gflops/sec 15137.31
+Sizes are: (Indim 4096, Outdim 4088, radius 4, nIn 32, nOut 32, Tx :32, Ty 2, Ry 8, Tz 2, R< 4) 
+In_dim : 4096, out dim 4086, ker dim 11, Nin 32, Nout 32 
+GPU 2D Conv version runs in 1188490 microsecs, Gflops/sec 3481.10
+GPU 2D Conv version runs in 283533 microsecs, Gflops/sec 14591.79
+Sizes are: (Indim 4096, Outdim 4086, radius 5, nIn 32, nOut 32, Tx :32, Ty 2, Ry 6, Tz 2, R< 4) 
+In_dim : 4096, out dim 4084, ker dim 13, Nin 32, Nout 32 
+GPU 2D Conv version runs in 1685496 microsecs, Gflops/sec 3425.00
+GPU 2D Conv version runs in 408058 microsecs, Gflops/sec 14147.06
+Sizes are: (Indim 4096, Outdim 4084, radius 6, nIn 32, nOut 32, Tx :32, Ty 2, Ry 5, Tz 2, R< 2) 
+In_dim : 4096, out dim 4082, ker dim 15, Nin 32, Nout 32 
+GPU 2D Conv version runs in 2595324 microsecs, Gflops/sec 2958.47
+GPU 2D Conv version runs in 563046 microsecs, Gflops/sec 13636.87
+Sizes are: (Indim 4096, Outdim 4082, radius 7, nIn 32, nOut 32, Tx :32, Ty 2, Ry 5, Tz 2, R< 2) 
+In_dim : 4096, out dim 4080, ker dim 17, Nin 32, Nout 32 
+GPU 2D Conv version runs in 5932489 microsecs, Gflops/sec 1660.78
+GPU 2D Conv version runs in 5003614 microsecs, Gflops/sec 1969.08
+Sizes are: (Indim 4096, Outdim 4080, radius 8, nIn 32, nOut 32, Tx :32, Ty 2, Ry 8, Tz 2, R< 2) 
+In_dim : 4096, out dim 4094, ker dim 3, Nin 32, Nout 32 
+GPU 2D Conv version runs in 77484 microsecs, Gflops/sec 3987.09
+GPU 2D Conv version runs in 23846 microsecs, Gflops/sec 12955.45
+Sizes are: (Indim 4096, Outdim 4094, radius 1, nIn 32, nOut 32, Tx :256, Ty 1, Ry 8, Tz 1, R< 8) 
+./conv 4096 8 8
+In_dim : 4096, out dim 4094, ker dim 3, Nin 8, Nout 8 
+GPU 2D Conv version runs in 7779 microsecs, Gflops/sec 2482.13
+GPU 2D Conv version runs in 1727 microsecs, Gflops/sec 11180.36
+Sizes are: (Indim 4096, Outdim 4094, radius 1, nIn 8, nOut 8, Tx :32, Ty 2, Ry 13, Tz 2, R< 4) 
+In_dim : 4096, out dim 4092, ker dim 5, Nin 8, Nout 8 
+GPU 2D Conv version runs in 14785 microsecs, Gflops/sec 3624.10
+GPU 2D Conv version runs in 3875 microsecs, Gflops/sec 13827.69
+Sizes are: (Indim 4096, Outdim 4092, radius 2, nIn 8, nOut 8, Tx :32, Ty 2, Ry 10, Tz 2, R< 4) 
+In_dim : 4096, out dim 4090, ker dim 7, Nin 8, Nout 8 
+GPU 2D Conv version runs in 26191 microsecs, Gflops/sec 4005.90
+GPU 2D Conv version runs in 6778 microsecs, Gflops/sec 15479.29
+Sizes are: (Indim 4096, Outdim 4090, radius 3, nIn 8, nOut 8, Tx :32, Ty 2, Ry 16, Tz 2, R< 2) 
+In_dim : 4096, out dim 4088, ker dim 9, Nin 8, Nout 8 
+GPU 2D Conv version runs in 46679 microsecs, Gflops/sec 3711.89
+GPU 2D Conv version runs in 11251 microsecs, Gflops/sec 15400.18
+Sizes are: (Indim 4096, Outdim 4088, radius 4, nIn 8, nOut 8, Tx :32, Ty 2, Ry 8, Tz 2, R< 4) 
+In_dim : 4096, out dim 4086, ker dim 11, Nin 8, Nout 8 
+GPU 2D Conv version runs in 74710 microsecs, Gflops/sec 3461.09
+GPU 2D Conv version runs in 18054 microsecs, Gflops/sec 14322.49
+Sizes are: (Indim 4096, Outdim 4086, radius 5, nIn 8, nOut 8, Tx :32, Ty 2, Ry 6, Tz 2, R< 4) 
+In_dim : 4096, out dim 4084, ker dim 13, Nin 8, Nout 8 
+GPU 2D Conv version runs in 104192 microsecs, Gflops/sec 3462.85
+GPU 2D Conv version runs in 24988 microsecs, Gflops/sec 14438.98
+Sizes are: (Indim 4096, Outdim 4084, radius 6, nIn 8, nOut 8, Tx :32, Ty 2, Ry 5, Tz 2, R< 2) 
+In_dim : 4096, out dim 4082, ker dim 15, Nin 8, Nout 8 
+GPU 2D Conv version runs in 160277 microsecs, Gflops/sec 2994.11
+GPU 2D Conv version runs in 35693 microsecs, Gflops/sec 13444.83
+Sizes are: (Indim 4096, Outdim 4082, radius 7, nIn 8, nOut 8, Tx :32, Ty 2, Ry 5, Tz 2, R< 2) 
+In_dim : 4096, out dim 4080, ker dim 17, Nin 8, Nout 8 
+GPU 2D Conv version runs in 371771 microsecs, Gflops/sec 1656.35
+GPU 2D Conv version runs in 303275 microsecs, Gflops/sec 2030.45
+Sizes are: (Indim 4096, Outdim 4080, radius 8, nIn 8, nOut 8, Tx :32, Ty 2, Ry 8, Tz 2, R< 2) 
+In_dim : 4096, out dim 4094, ker dim 3, Nin 8, Nout 8 
+GPU 2D Conv version runs in 7991 microsecs, Gflops/sec 2416.28
+GPU 2D Conv version runs in 2715 microsecs, Gflops/sec 7111.78
+Sizes are: (Indim 4096, Outdim 4094, radius 1, nIn 8, nOut 8, Tx :256, Ty 1, Ry 8, Tz 1, R< 8) 

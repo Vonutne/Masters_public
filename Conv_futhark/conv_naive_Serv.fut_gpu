@@ -1,0 +1,135 @@
+types {
+
+}
+
+
+
+entry("main",
+      {inputs: [][][]f32,
+       kernels: [][][][]f32},
+      {*[][][]f32})
+  entry_main (l_7509 : i64,
+              m_7510 : i64,
+              n_7511 : i64,
+              o_7512 : i64,
+              k_7513 : i64,
+              inputs_7514 : [l_7509][m_7510][n_7511]f32,
+              kernels_7515 : [l_7509][o_7512][k_7513][k_7513]f32)
+  : {i64,
+     i64,
+     *[o_7512][?0][?1]f32} = {
+  let {+_lhs_9209 : i64} =
+    sub64(m_7510, k_7513)
+  let {out_m_9210 : i64} =
+    add64(1i64, +_lhs_9209)
+  let {+_lhs_9211 : i64} =
+    sub64(n_7511, k_7513)
+  let {out_n_9212 : i64} =
+    add64(1i64, +_lhs_9211)
+  let {bounds_invalid_upwards_9217 : bool} =
+    slt64(out_m_9210, 0i64)
+  let {valid_9218 : bool} =
+    neg_bool bounds_invalid_upwards_9217
+  let {range_valid_c_9219 : unit} =
+    assert(valid_9218, {"Range ", 0i64 : i64, "..", 1i64 : i64, "..<", out_m_9210 : i64, " is invalid."}, "/prelude/array.fut:94:3-11")
+  let {bounds_invalid_upwards_9221 : bool} =
+    slt64(out_n_9212, 0i64)
+  let {valid_9222 : bool} =
+    neg_bool bounds_invalid_upwards_9221
+  let {range_valid_c_9223 : unit} =
+    assert(valid_9222, {"Range ", 0i64 : i64, "..", 1i64 : i64, "..<", out_n_9212 : i64, " is invalid."}, "/prelude/array.fut:94:3-11")
+  let {empty_slice_9226 : bool} =
+    eq_i64(k_7513, 0i64)
+  let {m_9227 : i64} =
+    sub64(k_7513, 1i64)
+  let {y_9602 : i64} =
+    mul_nw64(out_m_9210, out_n_9212)
+  let {nest_size_9603 : i64} =
+    mul_nw64(o_7512, y_9602)
+  let {segmap_tblock_size_9604 : i64} =
+    get_size(segmap_tblock_size_9395, thread_block_size)
+  let {segmap_usable_groups_9605 : i64} =
+    sdiv_up64(nest_size_9603, segmap_tblock_size_9604)
+  let {kernels_coalesced_9696 : [l_7509][o_7512][k_7513][k_7513]f32} =
+    manifest((0, 2, 3, 1), kernels_7515)
+  let {defunc_0_map_res_pretr_pretr_9606 : [o_7512][out_m_9210][out_n_9212]f32} =
+    segmap(thread; ; grid=segmap_usable_groups_9605; blocksize=segmap_tblock_size_9604)
+    (gtid_9607 < o_7512, gtid_9608 < out_m_9210, gtid_9609 < out_n_9212) (~phys_tid_9610) : {f32} {
+      let {index_primexp_9669 : i64} =
+        add64(k_7513, gtid_9608)
+      let {binop_x_9678 : bool} =
+        sle64(gtid_9608, index_primexp_9669)
+      let {cmpop_y_9679 : i64} =
+        add64(m_9227, gtid_9608)
+      let {binop_x_9680 : bool} =
+        sle64(0i64, cmpop_y_9679)
+      let {binop_y_9682 : bool} =
+        slt64(cmpop_y_9679, m_7510)
+      let {binop_y_9683 : bool} =
+        logand(binop_x_9680, binop_y_9682)
+      let {binop_y_9684 : bool} =
+        logand(binop_x_9678, binop_y_9683)
+      let {index_primexp_9685 : bool} =
+        logor(empty_slice_9226, binop_y_9684)
+      let {map2__arg0_9617 : i64} =
+        #{range_valid_c_9223}
+        add64(k_7513, gtid_9609)
+      let {i_p_m_t_s_9618 : i64} =
+        #{range_valid_c_9223}
+        add64(m_9227, gtid_9609)
+      let {zero_leq_i_p_m_t_s_9619 : bool} =
+        sle64(0i64, i_p_m_t_s_9618)
+      let {i_p_m_t_s_leq_w_9620 : bool} =
+        slt64(i_p_m_t_s_9618, n_7511)
+      let {i_lte_j_9622 : bool} =
+        #{range_valid_c_9223}
+        sle64(gtid_9609, map2__arg0_9617)
+      let {y_9624 : bool} =
+        #{range_valid_c_9223}
+        logand(zero_leq_i_p_m_t_s_9619, i_p_m_t_s_leq_w_9620)
+      let {forwards_ok_9625 : bool} =
+        logand(i_lte_j_9622, y_9624)
+      let {ok_or_empty_9626 : bool} =
+        logor(empty_slice_9226, forwards_ok_9625)
+      let {index_ok_9635 : bool} =
+        #{range_valid_c_9219}
+        logand(ok_or_empty_9626, index_primexp_9685)
+      let {defunc_0_reduce_res_9627 : f32} =
+        loop {redout_9686 : f32} = {0.0f32}
+        for i_9687:i64 < l_7509 do {
+          let {index_certs_9636 : unit} =
+            #{range_valid_c_9219, range_valid_c_9223}
+            assert(index_ok_9635, {"Index [", i_9687 : i64, ", ", gtid_9608 : i64, ":", index_primexp_9669 : i64, ", ", gtid_9609 : i64, ":", map2__arg0_9617 : i64, "] out of bounds for array of shape [", l_7509 : i64, "][", m_7510 : i64, "][", n_7511 : i64, "]."}, "conv_naive.fut:77:18-53")
+          let {defunc_0_reduce_res_9639 : f32} =
+            loop {redout_9688 : f32} = {0.0f32}
+            for i_9689:i64 < k_7513 do {
+              let {slice_9692 : i64} =
+                add_nw64(gtid_9608, i_9689)
+              let {defunc_0_reduce_res_9642 : f32} =
+                loop {redout_9690 : f32} = {0.0f32}
+                for i_9691:i64 < k_7513 do {
+                  let {slice_9693 : i64} =
+                    add_nw64(gtid_9609, i_9691)
+                  let {eta_p_9643 : f32} =
+                    #{range_valid_c_9219, range_valid_c_9223, index_certs_9636}
+                    inputs_7514[i_9687, slice_9692, slice_9693]
+                  let {eta_p_9644 : f32} =
+                    kernels_coalesced_9696[i_9687, gtid_9607, i_9689, i_9691]
+                  let {lifted_lambda_res_9645 : f32} =
+                    fmul32(eta_p_9643, eta_p_9644)
+                  let {defunc_0_op_res_9648 : f32} =
+                    fadd32(lifted_lambda_res_9645, redout_9690)
+                  in {defunc_0_op_res_9648}
+                }
+              let {defunc_0_op_res_9651 : f32} =
+                fadd32(defunc_0_reduce_res_9642, redout_9688)
+              in {defunc_0_op_res_9651}
+            }
+          let {defunc_0_op_res_9654 : f32} =
+            fadd32(defunc_0_reduce_res_9639, redout_9686)
+          in {defunc_0_op_res_9654}
+        }
+      return {returns defunc_0_reduce_res_9627}
+    }
+  in {out_m_9210, out_n_9212, defunc_0_map_res_pretr_pretr_9606}
+}

@@ -1,0 +1,1 @@
+Kernel execution succeeded    (FilterRadius=2, Tx= 16, Ty= 4, Tz= 4, CoutPerThread= 8, YPerThread= 4, time = 5.676032 milli): 9.458560e+12 FLOPS

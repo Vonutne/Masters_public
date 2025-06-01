@@ -1,0 +1,7 @@
+Compiling conv_naive.fut...
+Reporting arithmetic mean runtime of at least 10 runs for each dataset (min 0.5s).
+More runs automatically performed for up to 300s to ensure accurate measurement.
+
+conv_naive.fut (no tuning file):
+[16][512][512]f32 [16][16][5][5]f32:       2081μs (95% CI: [    2078.5,     2084.2])
+dataset_med.txt:                          36141μs (95% CI: [   36130.0,    36160.1])
